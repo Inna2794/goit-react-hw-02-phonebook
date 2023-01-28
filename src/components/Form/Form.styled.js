@@ -6,7 +6,7 @@ export const TheForm = styled.form`
   display: flex;
   flex-direction: column;
   border: 1px solid #ff6c00;
-  border-radius: 23px;
+  border-radius: 16px;
 `;
 
 export const Label = styled.label`
@@ -23,19 +23,18 @@ export const Input = styled.input`
 
   &:focus-visible {
     outline: 1px solid #ff6c00;
+    border: 1px solid #fff;
   }
 `;
 
 export const SubmitBtn = styled.button`
   width: 120px;
   padding: 5px 10px;
-  margin-left: auto;
-  margin-right: auto;
   font-size: 15px;
   font-weight: 600;
   border-radius: 5px;
   border: none;
-  background-color: #eee;
+  background-color: #fff;
   color: #ff6c00;
   cursor: pointer;
   transition: background-color 300ms linear, color 300ms linear;

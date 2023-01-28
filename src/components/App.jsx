@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
-import Form from 'components/Form/Form';
-import Filter from 'components/Filter/Filter';
-import Contacts from 'components/Contacts/Contacts';
+import Form from 'components/Form';
+import Filter from 'components/Filter';
+import Contacts from 'components/Contacts';
 
 export class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      contacts: [],
-      filter: '',
-    };
-  }
+  state = {
+    contacts: [],
+    filter: '',
+  };
 
   formSubmitHandler = data => {
-    this.state.contacts.map(el => {
-      if (el.name.toLowerCase() === data.name.toLowerCase()) {
-        alert(`${data.name} is already in contacts.`);
-      }
-      return el.name;
-    });
-    this.setState({ contacts: [...this.state.contacts, data] });
+    let check = false;
+    if (this.state.contacts !== '') {
+      check = this.state.contacts.find(
+        el => el.name.toLowerCase() === data.name.toLowerCase()
+      );
+    }
+    return check
+      ? alert(`${data.name} is already exist.`)
+      : this.setState({ contacts: [...this.state.contacts, data] });
   };
 
   handleChangeFilter = data => {
@@ -34,12 +33,13 @@ export class App extends Component {
   };
 
   render() {
+    console.log(this.state.contacts);
     return (
       <div>
-        <h2>Phonebook</h2>
+        <h2 style={{ color: '#ff6c00' }}>Phonebook</h2>
         <Form onSubmit={this.formSubmitHandler} />
-        <h2>Contacts</h2>
-        <Filter onChange={this.handleChangeFilter} />
+        <h2 style={{ color: '#ff6c00' }}>Contacts</h2>
+        <Filter onChange={this.handleChangeFilter} filter={this.state.filter} />
         <Contacts
           onDelete={this.handleClickDelete}
           data={this.state.contacts}
