@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Form from 'components/Form';
 import Filter from 'components/Filter';
 import Contacts from 'components/Contacts';
+import uniqid from 'uniqid';
 
 export class App extends Component {
   state = {
@@ -10,6 +11,7 @@ export class App extends Component {
   };
 
   formSubmitHandler = data => {
+    data.id = uniqid();
     let check = false;
     if (this.state.contacts !== '') {
       check = this.state.contacts.find(
@@ -26,14 +28,12 @@ export class App extends Component {
   };
 
   handleClickDelete = data => {
-    console.log(data);
     this.setState({
       contacts: this.state.contacts.filter(el => el.id !== data),
     });
   };
 
   render() {
-    console.log(this.state.contacts);
     return (
       <div>
         <h2 style={{ color: '#ff6c00' }}>Phonebook</h2>
