@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Form from 'components/Form';
 import Filter from 'components/Filter';
 import Contacts from 'components/Contacts';
-import uniqid from 'uniqid';
 
 export class App extends Component {
   state = {
@@ -11,7 +10,6 @@ export class App extends Component {
   };
 
   formSubmitHandler = data => {
-    data.id = uniqid();
     let check = false;
     if (this.state.contacts !== '') {
       check = this.state.contacts.find(
@@ -27,6 +25,13 @@ export class App extends Component {
     this.setState({ filter: data });
   };
 
+  getFilteredContacts = () => {
+    const { filter, contacts } = this.state;
+    return contacts.filter(el =>
+      el.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   handleClickDelete = data => {
     this.setState({
       contacts: this.state.contacts.filter(el => el.id !== data),
@@ -34,17 +39,14 @@ export class App extends Component {
   };
 
   render() {
+    const filteredContacts = this.getFilteredContacts();
     return (
       <div>
         <h2 style={{ color: '#ff6c00' }}>Phonebook</h2>
         <Form onSubmit={this.formSubmitHandler} />
         <h2 style={{ color: '#ff6c00' }}>Contacts</h2>
         <Filter onChange={this.handleChangeFilter} filter={this.state.filter} />
-        <Contacts
-          onDelete={this.handleClickDelete}
-          data={this.state.contacts}
-          filter={this.state.filter}
-        />
+        <Contacts onDelete={this.handleClickDelete} data={filteredContacts} />
       </div>
     );
   }
